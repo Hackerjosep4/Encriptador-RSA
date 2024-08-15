@@ -116,3 +116,5 @@ with open(f"Clave_publica({codigoClave}).txt", 'w') as archivo:
 # Guarda la clave privada en un archivo
 with open(f"Clave_privada({codigoClave}).txt", 'w') as archivo:
     archivo.write(f"{p}, {q}, {n}, {e}, {d}\np, q, n, e, d")
+
+exit()

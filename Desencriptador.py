@@ -62,3 +62,5 @@ if nombrearchivoMensage.endswith(" - Encriptado"):
 # Crea un nuevo archivo con el sufijo " - Desencriptado" y escribe el texto desencriptado en él
 with open(nombrearchivoMensage + " - Desencriptado" + ".txt", 'w') as archivo:
     archivo.write(texto)
+
+exit()

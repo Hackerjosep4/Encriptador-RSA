@@ -57,3 +57,5 @@ texto = ', '.join(str(numero) for numero in textoEncriptado)
 # Crea un nuevo archivo con el sufijo " - Encriptado" y escribe el texto encriptado en él
 with open(nombreArchivoMensage + " - Encriptado" + ".txt", 'w') as archivo:
     archivo.write(texto)
+
+exit()
