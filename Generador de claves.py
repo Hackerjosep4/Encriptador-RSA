@@ -12,12 +12,17 @@ def generar_numero_primo_aleatorio(rango_min, rango_max):
 # Función para encontrar el coprimo más alto de un número n
 def encontrar_coprimo_mas_alto(n):
     candidatos = []
+    empezar = 1
+    if n > 100000000000:
+        empezar -= 10000000000
     # Itera en orden descendente desde n-1 hasta 1
     for candidato in range(n - 1, 0, -1):
         # Verifica si el candidato es coprimo con n usando el máximo común divisor
         if gcd(n, candidato) == 1:
             # Si es coprimo, lo añade a la lista de candidatos
             candidatos.append(candidato)
+            if len(candidatos) > 10000000:
+                break
     # Si no se encontraron candidatos, retorna None
     if len(candidatos) <= 0:
         return None
@@ -36,13 +41,18 @@ def euler(a, b):
 
 respuesta = ""
 # Bucle que se ejecuta hasta que el usuario introduzca una opción válida
-while not respuesta in ["P", "B", "M", "A"]:
+while not respuesta in ["P", "S", "BAS", "BAJ", "ME", "A", "MU", "E", "U"]:
     # Imprime las opciones para el nivel de encriptado
     print("Nivel de encriptado:")
-    print("\tP - Prueva")
-    print("\tB - Bajo")
-    print("\tM - Medio")
-    print("\tA - Alto")
+    print("\tP   - Prueva")
+    print("\tS   - Sencillo")
+    print("\tBAS - Basico")
+    print("\tBAJ - Bajo")
+    print("\tME  - Medio")
+    print("\tA   - Alto")
+    print("\tMU  - Muy alto")
+    print("\tE   - Extremo (Puede tardar un par de minutos)")
+    print("\tU   - Ultar extremo (Puede tardar mas de 5 minutos)")
     # Captura la respuesta del usuario, eliminando espacios y convirtiéndola a mayúsculas
     respuesta = input("Respuesta: ").strip().upper()
     print()
@@ -55,15 +65,30 @@ rangoMax = 0
 if respuesta == "P":
     rangoMin = 10
     rangoMax = 50
-elif respuesta == "B":
+elif respuesta == "S":
+    rangoMin = 50
+    rangoMax = 100
+elif respuesta == "BAS":
     rangoMin = 100
     rangoMax = 1000
-elif respuesta == "M":
+elif respuesta == "BAJ":
     rangoMin = 1000
     rangoMax = 10000
-else:
+elif respuesta == "ME":
     rangoMin = 10000
     rangoMax = 100000
+elif respuesta == "A":
+    rangoMin = 100000
+    rangoMax = 500000
+elif respuesta == "MU":
+    rangoMin = 500000
+    rangoMax = 1000000
+elif respuesta == "E":
+    rangoMin = 1000000
+    rangoMax = 10000000
+elif respuesta == "U":
+    rangoMin = 10000000
+    rangoMax = 100000000
 
 print()
 print("Loading...")
