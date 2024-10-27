@@ -1,4 +1,6 @@
+import tkinter as tk
 from sympy import primerange
+from sympy import mod_inverse
 from random import choice
 from math import gcd
 
@@ -12,17 +14,24 @@ def generar_numero_primo_aleatorio(rango_min, rango_max):
 # Función para encontrar el coprimo más alto de un número n
 def encontrar_coprimo_mas_alto(n):
     candidatos = []
-    empezar = 1
-    if n > 100000000000:
-        empezar -= 10000000000
-    # Itera en orden descendente desde n-1 hasta 1
-    for candidato in range(n - 1, 0, -1):
-        # Verifica si el candidato es coprimo con n usando el máximo común divisor
-        if gcd(n, candidato) == 1:
-            # Si es coprimo, lo añade a la lista de candidatos
-            candidatos.append(candidato)
-            if len(candidatos) > 10000000:
-                break
+    if n%2 == 0:
+        # Itera en orden descendente desde n-1 hasta 1
+        for candidato in range(n - 1, 0, -2):
+            # Verifica si el candidato es coprimo con n usando el máximo común divisor
+            if gcd(n, candidato) == 1:
+                # Si es coprimo, lo añade a la lista de candidatos
+                candidatos.append(candidato)
+                if len(candidatos) > 10000000:
+                    break
+    else:
+        # Itera en orden descendente desde n-1 hasta 1
+        for candidato in range(n - 1, 0, -1):
+            # Verifica si el candidato es coprimo con n usando el máximo común divisor
+            if gcd(n, candidato) == 1:
+                # Si es coprimo, lo añade a la lista de candidatos
+                candidatos.append(candidato)
+                if len(candidatos) > 10000000:
+                    break
     # Si no se encontraron candidatos, retorna None
     if len(candidatos) <= 0:
         return None
@@ -63,7 +72,7 @@ rangoMax = 0
 
 # Define el rango de números primos basado en la opción del usuario
 if respuesta == "P":
-    rangoMin = 10
+    rangoMin = 16
     rangoMax = 50
 elif respuesta == "S":
     rangoMin = 50
@@ -101,7 +110,8 @@ n = p*q
 # Calcula el valor de e como el coprimo más alto de la función totiente de Euler de p y q
 e = encontrar_coprimo_mas_alto(euler(p, q))
 # Calcula el valor de d como el inverso multiplicativo de e módulo la función totiente de Euler de p y q
-d = pow(e, -1, euler(p, q))
+#d = pow(e, -1, euler(p, q))
+d = mod_inverse(e, euler(p, q))
 
 print("100% Compleated")
 print()
