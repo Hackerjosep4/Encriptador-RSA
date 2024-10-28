@@ -3,10 +3,8 @@
 import tkinter as tk
 # Ventana de seleccion
 from tkinter import filedialog
-# Funcion para comprovar si un archivo existe
-from os.path import exists as archivoExiste
-# Libreria os
-import os
+# Libreria path paran operaciones con rutas
+from os import path as osp
 # ...
 from sympy import primerange
 # ...
@@ -55,10 +53,64 @@ def loadVentanaE1(ventanaPrincipal):
     vaciarVentanaPrincipal(ventanaPrincipal)
 
     ventanaPrincipal.title("Encriptador")
+    ventanaPrincipal.geometry("250x130")
+
+    tk.Label(ventanaPrincipal, text= "Escoge la calve publica").pack()
+    tk.Button(ventanaPrincipal, text= "Guardadas", command= lambda : loadVentanaE1a1(ventanaPrincipal)).pack()
+    tk.Button(ventanaPrincipal, text= "Otra", command= lambda : loadVentanaE1_2(ventanaPrincipal)).pack()
+    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentana1(ventanaPrincipal)).pack()
+
+def loadVentanaE1_2(ventanaPrincipal):
+    vaciarVentanaPrincipal(ventanaPrincipal)
+
+    ventanaPrincipal.title("Encriptador")
+    ventanaPrincipal.geometry("250x130")
+
+    tk.Label(ventanaPrincipal, text= "Escoge la calve publica").pack()
+    tk.Button(ventanaPrincipal, text= "Archivo", command= lambda : abrirClavePubDeArchivo(ventanaPrincipal, filedialog.askopenfilename())).pack()
+    tk.Button(ventanaPrincipal, text= "Introducir manual", command= lambda : loadVentanaE1b1(ventanaPrincipal)).pack()
+    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentanaE1(ventanaPrincipal)).pack()
+
+def loadVentanaE1a1(ventanaPrincipal):
+    vaciarVentanaPrincipal(ventanaPrincipal)
+
+    clavesGuardadas = leerConfigPub()
+
+    ventanaPrincipal.title("Encriptador")
+    ventanaPrincipal.geometry("250x"+str(75+(20*len(clavesGuardadas))))
+
+    tk.Label(ventanaPrincipal, text= "Escoge la clave publica").pack()
+
+    for clave in clavesGuardadas:
+        tk.Button(ventanaPrincipal, text= clave["nombre"], command= lambda ruta=osp.join(osp.dirname(osp.dirname(__file__)), clave["path"]) : abrirClavePubDeArchivo(ventanaPrincipal, ruta)).pack()
+    
+    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentanaE1(ventanaPrincipal)).pack()
+
+def loadVentanaE1b1(ventanaPrincipal):
+    vaciarVentanaPrincipal(ventanaPrincipal)
+
+    ventanaPrincipal.title("Encriptador")
+    ventanaPrincipal.geometry("250x200")
+
+    tk.Label(ventanaPrincipal, text= "Introduce los numeros").pack()
+    tk.Label(ventanaPrincipal, text= "E").pack()
+    input1VE1b1 = tk.Entry(ventanaPrincipal)
+    input1VE1b1.pack()
+    tk.Label(ventanaPrincipal, text= "N").pack()
+    input2VE1b1 = tk.Entry(ventanaPrincipal)
+    input2VE1b1.pack()
+    tk.Button(ventanaPrincipal, text= "Confirmar", command= lambda : loadVentanaE2(ventanaPrincipal, int(input1VE1b1.get()), int(input2VE1b1.get()) ) ).pack()
+    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentanaE1_2(ventanaPrincipal)).pack()
+
+def loadVentanaE2(ventanaPrincipal, e, n):
+    vaciarVentanaPrincipal(ventanaPrincipal)
+
+    ventanaPrincipal.title("Encriptador")
     ventanaPrincipal.geometry("250x100")
 
-    tk.Label(ventanaPrincipal, text= "Desactivado").pack()
-    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentana1(ventanaPrincipal)).pack()
+    tk.Label(ventanaPrincipal, text= "Escoge el mensaje").pack()
+    tk.Button(ventanaPrincipal, text= "Seleccionar archivo", command= lambda : funButton1vE2(ventanaPrincipal, e, n)).pack()
+    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentanaE1(ventanaPrincipal)).pack()
 
 
 
@@ -74,10 +126,64 @@ def loadVentanaD1(ventanaPrincipal):
     vaciarVentanaPrincipal(ventanaPrincipal)
 
     ventanaPrincipal.title("Desencriptador")
+    ventanaPrincipal.geometry("250x130")
+
+    tk.Label(ventanaPrincipal, text= "Escoge la calve publica").pack()
+    tk.Button(ventanaPrincipal, text= "Guardadas", command= lambda : loadVentanaD1a1(ventanaPrincipal)).pack()
+    tk.Button(ventanaPrincipal, text= "Otra").pack()
+    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentana1(ventanaPrincipal)).pack()
+
+def loadVentanaD1_2(ventanaPrincipal):
+    vaciarVentanaPrincipal(ventanaPrincipal)
+
+    ventanaPrincipal.title("Desencriptador")
+    ventanaPrincipal.geometry("250x130")
+
+    tk.Label(ventanaPrincipal, text= "Escoge la calve privada").pack()
+    tk.Button(ventanaPrincipal, text= "Archivo", command= lambda : abrirClavePriDeArchivo(ventanaPrincipal, filedialog.askopenfilename())).pack()
+    tk.Button(ventanaPrincipal, text= "Introducir manual", command= lambda : loadVentanaD1b1(ventanaPrincipal)).pack()
+    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentanaD1(ventanaPrincipal)).pack()
+
+def loadVentanaD1a1(ventanaPrincipal):
+    vaciarVentanaPrincipal(ventanaPrincipal)
+    
+    clavesGuardadas = leerConfigPri()
+
+    ventanaPrincipal.title("Desencriptador")
+    ventanaPrincipal.geometry("250x"+str(75+(20*len(clavesGuardadas))))
+
+    tk.Label(ventanaPrincipal, text= "Escoge la clave privada").pack()
+
+    for clave in clavesGuardadas:
+        tk.Button(ventanaPrincipal, text= clave["nombre"], command= lambda ruta=osp.join(osp.dirname(osp.dirname(__file__)), clave["path"]) : abrirClavePriDeArchivo(ventanaPrincipal, ruta)).pack()
+    
+    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentanaD1(ventanaPrincipal)).pack()
+
+def loadVentanaD1b1(ventanaPrincipal):
+    vaciarVentanaPrincipal(ventanaPrincipal)
+
+    ventanaPrincipal.title("Desencriptador")
+    ventanaPrincipal.geometry("250x200")
+
+    tk.Label(ventanaPrincipal, text= "Introduce los numeros").pack()
+    tk.Label(ventanaPrincipal, text= "D").pack()
+    input1VE1b1 = tk.Entry(ventanaPrincipal)
+    input1VE1b1.pack()
+    tk.Label(ventanaPrincipal, text= "N").pack()
+    input2VE1b1 = tk.Entry(ventanaPrincipal)
+    input2VE1b1.pack()
+    tk.Button(ventanaPrincipal, text= "Confirmar", command= lambda : loadVentanaD2(ventanaPrincipal, int(input1VE1b1.get()), int(input2VE1b1.get()) ) ).pack()
+    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentanaD1_2(ventanaPrincipal)).pack()
+
+def loadVentanaD2(ventanaPrincipal, d, n):
+    vaciarVentanaPrincipal(ventanaPrincipal)
+
+    ventanaPrincipal.title("Desencriptador")
     ventanaPrincipal.geometry("250x100")
 
-    tk.Label(ventanaPrincipal, text= "Desactivado").pack()
-    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentana1(ventanaPrincipal)).pack()
+    tk.Label(ventanaPrincipal, text= "Escoge el mensaje").pack()
+    tk.Button(ventanaPrincipal, text= "Seleccionar archivo", command= lambda : funButton1vD2(ventanaPrincipal, d, n)).pack()
+    tk.Button(ventanaPrincipal, text= "Atras", command= lambda : loadVentanaD1(ventanaPrincipal)).pack()
 
 
 
@@ -142,8 +248,17 @@ def loadVentanaC1(ventanaPrincipal):
 
 
 
-def funButton1():
-    pass
+def funButton1vE2(ventanaPrincipal, e, n):
+    mensajeArch = filedialog.askopenfilename()
+    with open(mensajeArch , "r") as archivo:
+        mensaje = archivo.read()
+    encriptar(ventanaPrincipal, e, n, mensaje, osp.basename(mensajeArch)[:-4])
+
+def funButton1vD2(ventanaPrincipal, d, n):
+    mensajeArch = filedialog.askopenfilename()
+    with open(mensajeArch , "r") as archivo:
+        mensaje = archivo.read()
+    desencriptar(ventanaPrincipal, d, n, mensaje, osp.basename(mensajeArch)[:-4])
 
 
 
@@ -157,7 +272,7 @@ def funButton1():
 
 # Para cerrar el codigo en caso de error
 def cerrarPorError(textError = "Unknow"):
-    # Crear una ventana secundaria para el mensage
+    # Crear una ventana secundaria para el mensaje
     ventanaError = tk.Toplevel()
     # Añadir los textos
     text1vE = tk.Label(ventanaError, text= "Error:")
@@ -184,34 +299,41 @@ def vaciarVentanaPrincipal(ventanaPrincipal):
     ventanaPrincipal.geometry("100x100")
     ventanaPrincipal.title("")
 
-def encriptar(e, n, mensage):
+def encriptar(ventanaPrincipal, e, n, mensaje, nombre):
     textoEncriptado=[]
 
-    for caracterDesencriptado in mensage:
+    for caracterDesencriptado in mensaje:
         # Aplica la fórmula de encriptación RSA: (carácter^e) % n
-        caracterEncriptado = pow(caracterDesencriptado, e, n)
+        caracterEncriptado = pow(ord(caracterDesencriptado), e, n)
         # Añade el carácter encriptado a la lista
         textoEncriptado.append(caracterEncriptado)
 
-    mensageEncriptado = ', '.join(str(numero) for numero in textoEncriptado)
+    mensajeEncriptado = ', '.join(str(numero) for numero in textoEncriptado)
     
-    with open(filedialog.asksaveasfilename( defaultextension=".txt", filetypes=[("Text files", "*.txt")], title="Guardar archivo como" ), 'w') as archivo:
-            archivo.write(mensageEncriptado)
+    with open(filedialog.asksaveasfilename( defaultextension=".txt", filetypes=[("Text files", "*.txt")], title="Guardar archivo como", initialfile= nombre+" - Encriptado.txt"), 'w') as archivo:
+            archivo.write(mensajeEncriptado)
+    
+    loadVentana1(ventanaPrincipal)
 
-def desencriptar(d, n, mensage):
-    textoEncriptado = mensage.split(", ")
+def desencriptar(ventanaPrincipal, d, n, mensaje, nombre):
+    textoEncriptado = mensaje.split(", ")
     textoDesencriptado = []
 
     for caracterEncriptado in textoEncriptado:
         # Aplica la fórmula de encriptación RSA: (carácter^d) % n
-        caracterDesencriptado = pow(caracterEncriptado, d, n)
+        caracterDesencriptado = chr(pow(int(caracterEncriptado), d, n))
         # Añade el carácter encriptado a la lista
         textoDesencriptado.append(caracterDesencriptado)
     
-    mensageDesencriptado = "".join(textoDesencriptado)
+    mensajeDesencriptado = "".join(textoDesencriptado)
+
+    if mensaje[-13:] == " - Encriptado":
+        mensaje = mensaje[:-14]
     
-    with open(filedialog.asksaveasfilename( defaultextension=".txt", filetypes=[("Text files", "*.txt")], title="Guardar archivo como" ), 'w') as archivo:
-            archivo.write(mensageDesencriptado)
+    with open(filedialog.asksaveasfilename( defaultextension=".txt", filetypes=[("Text files", "*.txt")], title="Guardar archivo como", initialfile= nombre+" - Desencriptado.txt"), 'w') as archivo:
+            archivo.write(mensajeDesencriptado)
+    
+    loadVentana1(ventanaPrincipal)
 
 # Función para generar un número primo aleatorio dentro de un rango dado
 def generar_numero_primo_aleatorio(rango_min, rango_max):
@@ -280,7 +402,7 @@ def generar_claves(ventanaPrincipal, rangoMin, rangoMax):
     while codigoClave == "":
         codigoClave = str(tk.simpledialog.askstring("Input", "Introduce el codigo para las claves")).strip()
     
-    rutaGuardado = tk.filedialog.askdirectory()
+    rutaGuardado = filedialog.askdirectory()
 
     # Guarda la clave pública en un archivo
     with open(f"{rutaGuardado}\\Clave_publica({codigoClave}).txt", 'w') as archivo:
@@ -295,41 +417,60 @@ def generar_claves(ventanaPrincipal, rangoMin, rangoMax):
     loadVentana1(ventanaPrincipal)
 
 def leerConfigPri():
-    with open(f"{os.path.dirname(__file__)}\\configs\\pri.json", 'r') as archivo:
+    with open(f"{osp.dirname(__file__)}\\pri.json", 'r') as archivo:
         config = json.load(archivo)
     
     return config
 
 def leerConfigPub():
-    with open(f"{os.path.dirname(__file__)}\\configs\\pub.json", 'r') as archivo:
+    with open(f"{osp.dirname(__file__)}\\pub.json", 'r') as archivo:
         config = json.load(archivo)
     
     return config
 
 def leerConfigPer():
-    with open(f"{os.path.dirname(__file__)}\\configs\\per.json", 'r') as archivo:
+    with open(f"{osp.dirname(__file__)}\\per.json", 'r') as archivo:
         config = json.load(archivo)
     
     return config
 
 def leerConfigGru():
-    with open(f"{os.path.dirname(__file__)}\\configs\\gru.json", 'r') as archivo:
+    with open(f"{osp.dirname(__file__)}\\gru.json", 'r') as archivo:
         config = json.load(archivo)
     
     return config
 
 def escribirConfigPri(config):
-    with open(f"{os.path.dirname(__file__)}\\configs\\pri.json", 'w') as archivo:
+    with open(f"{osp.dirname(__file__)}\\pri.json", 'w') as archivo:
         json.dump(config)
 
 def escribirConfigPub(config):
-    with open(f"{os.path.dirname(__file__)}\\configs\\pub.json", 'w') as archivo:
+    with open(f"{osp.dirname(__file__)}\\pub.json", 'w') as archivo:
         json.dump(config)
 
 def escribirConfigPer(config):
-    with open(f"{os.path.dirname(__file__)}\\configs\\per.json", 'w') as archivo:
+    with open(f"{osp.dirname(__file__)}\\per.json", 'w') as archivo:
         json.dump(config)
 
 def escribirConfigGru(config):
-    with open(f"{os.path.dirname(__file__)}\\configs\\gru.json", 'w') as archivo:
+    with open(f"{osp.dirname(__file__)}\\gru.json", 'w') as archivo:
         json.dump(config)
+
+def abrirClavePubDeArchivo(ventanaPrincipal, path):
+    if osp.exists(path):
+        with open(path, 'r') as archivo:
+            line = archivo.readline().split(", ")
+        if len(line) == 2:
+            e, n = line
+            loadVentanaE2(ventanaPrincipal, int(e), int(n))
+
+def abrirClavePriDeArchivo(ventanaPrincipal, path):
+    if osp.exists(path):
+        with open(path, 'r') as archivo:
+            line = archivo.readline().split(", ")
+        if len(line) == 5:
+            _, _, n, _, d = line
+            loadVentanaD2(ventanaPrincipal, int(d), int(n))
+        elif len(line) == 2:
+            d, n = line
+            loadVentanaD2(ventanaPrincipal, int(d), int(n))

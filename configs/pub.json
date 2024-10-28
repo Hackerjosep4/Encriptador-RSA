@@ -1,10 +1,10 @@
 [
     {
         "nombre" : "Prueva",
-        "path" : "C:\\Users\\hacke_mpgk859\\OneDrive\\Escritorio\\GitHub\\Encriptador RSA (master)\\Claves de encriptado\\Clave_publica(Prueva).txt"
+        "path" : "Claves de encriptado\\Clave_publica(Prueva).txt"
     },
     {
         "nombre" : "Prueva Ultra",
-        "path" : "C:\\Users\\hacke_mpgk859\\OneDrive\\Escritorio\\GitHub\\Encriptador RSA (master)\\Claves de encriptado\\Clave_publica(Prueva Ultra).txt"
+        "path" : "Claves de encriptado\\Clave_publica(Prueva Ultra).txt"
     }
 ]

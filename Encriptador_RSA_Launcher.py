@@ -24,6 +24,8 @@
 
 
 
+# Aviso de espera
+print("Cargando...\nEspera a que se abra la ventana")
 
 
 
@@ -47,10 +49,10 @@ from sympy import mod_inverse
 from random import choice
 # ...
 from math import gcd
-# Importar funciones
-from Funciones import *
 # Para manejar json
 import json
+# Importar funciones
+from configs.Funciones import *
 
 
 
